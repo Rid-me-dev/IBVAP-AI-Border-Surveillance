@@ -22,7 +22,7 @@
 
 Here is the prototype link:
 
-`ibvap-border-surveillance.vercel.app/`
+`https://ibvap-border-surveillance-analytics.vercel.app/`
 
 ---
 
