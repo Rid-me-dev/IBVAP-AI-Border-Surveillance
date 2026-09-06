@@ -18,7 +18,7 @@ const NAV_ITEMS = [
 
 function SystemClock() {
   const [time, setTime] = useState(new Date());
-  useState(() => {
+  useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(t);
   });
