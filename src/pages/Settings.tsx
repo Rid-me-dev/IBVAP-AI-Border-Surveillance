@@ -74,29 +74,7 @@ export default function Settings() {
         </div>
       </div>
 
-      {/* Integration status */}
-      <div className="glass-panel p-4">
-        <div className="font-mono text-xs text-cyan-400 mb-4">INTEGRATION STATUS</div>
-        <div className="space-y-3">
-          {[
-            { label: "Supabase Database", status: isSupabaseConfigured, note: isSupabaseConfigured ? "Connected" : "Not configured — using Demo Mode" },
-            { label: "Python AI Backend", status: false, note: "Offline — using demo detections" },
-            { label: "YOLO Detection Engine", status: false, note: "Backend offline — simulated output" },
-            { label: "WebSocket Events", status: false, note: "Using polling fallback" },
-          ].map(({ label, status, note }) => (
-            <div key={label} className="flex items-start justify-between gap-4 py-2 border-b border-slate-800/40">
-              <div>
-                <div className="font-mono text-xs text-slate-300">{label}</div>
-                <div className="font-mono text-[10px] text-slate-600 mt-0.5">{note}</div>
-              </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ background: status ? "#22c55e" : "#ef4444" }} />
-                <span className="font-mono text-xs" style={{ color: status ? "#22c55e" : "#64748b" }}>{status ? "CONNECTED" : "OFFLINE"}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      
 
       <div className="flex items-center gap-3">
         <button onClick={save} className="px-6 py-2 font-mono text-sm tracking-widest transition-all" style={{ background: "#22d3ee", color: "#020817" }}>
