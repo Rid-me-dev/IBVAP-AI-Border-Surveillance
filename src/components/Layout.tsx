@@ -19,9 +19,14 @@ const NAV_ITEMS = [
 function SystemClock() {
   const [time, setTime] = useState(new Date());
   useEffect(() => {
-    const t = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(t);
-  });
+  const t = window.setInterval(() => {
+    setTime(new Date());
+  }, 1000);
+
+  return () => {
+    window.clearInterval(t);
+  };
+}, []);
   return (
     <div className="text-right">
       <div className="font-mono text-cyan-400 text-sm font-bold">{time.toTimeString().slice(0, 8)}</div>
