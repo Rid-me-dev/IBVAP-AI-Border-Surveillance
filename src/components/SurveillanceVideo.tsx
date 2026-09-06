@@ -31,6 +31,10 @@ interface Props {
   compact?: boolean;
   isFullscreen?: boolean;
   onClose?: () => void;
+
+  // Controls whether this camera should actually decode/play video.
+  // Used to prevent multiple simultaneous video decoders in GRID mode.
+  enableVideo?: boolean;
 }
 
 interface FaceAnalysisPanelProps {
@@ -219,6 +223,7 @@ export default function SurveillanceVideo({
   compact = false,
   isFullscreen = false,
   onClose,
+  enableVideo = true,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -243,7 +248,11 @@ export default function SurveillanceVideo({
     camera.type === "NIGHT VISION";
 
   const hasVideoSource =
-    Boolean(camera.video_source && camera.video_source.trim());
+  enableVideo &&
+  Boolean(
+    camera.video_source &&
+    camera.video_source.trim()
+  );
 
   /*
    * Keep detection state synchronized with incoming data.
