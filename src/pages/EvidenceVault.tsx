@@ -111,7 +111,7 @@ export default function EvidenceVault() {
             </div>
 
             {/* Actions */}
-           <div className="flex">
+<div className="flex">
   <button
     type="button"
     onClick={() => downloadMetadata(ev)}
@@ -120,7 +120,6 @@ export default function EvidenceVault() {
     METADATA
   </button>
 </div>
-          </div>
         ))}
       </div>
     </div>
