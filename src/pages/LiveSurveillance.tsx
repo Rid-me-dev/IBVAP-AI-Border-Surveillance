@@ -6,15 +6,24 @@ import SurveillanceVideo from "../components/SurveillanceVideo";
 type ViewMode = "grid" | "single";
 
 export default function LiveSurveillance() {
-  const [cameras] = useState<Camera[]>(DEMO_CAMERAS);
+  const [cameras] = useState<Camera[]>(() =>
+    Array.isArray(DEMO_CAMERAS) ? DEMO_CAMERAS.filter(Boolean) : []
+  );
+
   const [view, setView] = useState<ViewMode>("grid");
-  const [selected, setSelected] = useState<Camera>(cameras[0]);
+
+  const [selected, setSelected] = useState<Camera | null>(() =>
+    (Array.isArray(DEMO_CAMERAS) ? DEMO_CAMERAS.find(Boolean) : null) ?? null
+  );
   const [fullscreen, setFullscreen] = useState<Camera | null>(null);
   const [filterSector, setFilterSector] = useState("ALL");
   const [showAddModal, setShowAddModal] = useState(false);
 
   const sectors = ["ALL", ...Array.from(new Set(cameras.map(c => c.sector)))];
-  const filtered = cameras.filter(c => filterSector === "ALL" || c.sector === filterSector);
+  const filtered = cameras.filter(
+    (c): c is Camera =>
+      Boolean(c) && (filterSector === "ALL" || c.sector === filterSector)
+  );
 
   return (
     <div className="p-4 space-y-4 min-h-full">
@@ -48,7 +57,7 @@ export default function LiveSurveillance() {
       {view === "grid" && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
           {filtered.map(cam => (
-            <div key={cam.id} className={`glass-panel overflow-hidden cursor-pointer transition-all ${selected?.id === cam.id ? "border-glow-cyan" : ""}`}
+            <div key={cam.id} className={`glass-panel overflow-hidden cursor-pointer transition-all ${selected && selected.id === cam.id ? "border-glow-cyan" : ""}`}
               onClick={() => { setSelected(cam); setView("single"); }}>
               <SurveillanceVideo camera={cam} onFullscreen={() => setFullscreen(cam)} />
               <div className="px-3 py-2 flex items-center justify-between border-t border-cyan-900/20">
@@ -67,7 +76,7 @@ export default function LiveSurveillance() {
       )}
 
       {/* Single view */}
-      {view === "single" && (
+      {view === "single" && selected && (
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-3">
           <div className="xl:col-span-3 glass-panel overflow-hidden">
             <SurveillanceVideo camera={selected} showPTZ onFullscreen={() => setFullscreen(selected)} />
