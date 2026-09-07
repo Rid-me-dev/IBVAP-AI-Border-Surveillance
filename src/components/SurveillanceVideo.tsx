@@ -24,7 +24,7 @@ const RISK_COLORS: Record<string, string> = {
 };
 
 interface Props {
-  camera: Camera;
+  camera?: Camera | null;
   detections?: Detection[];
   showPTZ?: boolean;
   onFullscreen?: () => void;
@@ -220,6 +220,15 @@ export default function SurveillanceVideo({
   isFullscreen = false,
   onClose,
 }: Props) {
+  // Defensive guard: prevents a blank React screen if a camera is temporarily undefined.
+  if (!camera) {
+    return (
+      <div className="w-full min-h-[220px] flex items-center justify-center bg-slate-950 border border-slate-800">
+        <span className="font-mono text-xs text-slate-500">CAMERA DATA UNAVAILABLE</span>
+      </div>
+    );
+  }
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [ptz, setPTZ] = useState<PTZState>({
