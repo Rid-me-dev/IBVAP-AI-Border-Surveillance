@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import { DEMO_INCIDENTS } from "../services/demoData";
 import type { Incident, IncidentStatus, RiskLevel } from "../types";
 
@@ -106,23 +105,10 @@ function IncidentDetail({ incident, onClose }: { incident: Incident; onClose: ()
 }
 
 export default function Incidents() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [incidents, setIncidents] = useState<Incident[]>(DEMO_INCIDENTS);
   const [selected, setSelected] = useState<Incident | null>(null);
   const [filterRisk, setFilterRisk] = useState("ALL");
   const [filterStatus, setFilterStatus] = useState("ALL");
-
-  useEffect(() => {
-    const incidentCode = searchParams.get("incident");
-    if (!incidentCode) return;
-    const match = incidents.find((i) => i.incident_code === incidentCode);
-    if (match) setSelected(match);
-  }, [searchParams, incidents]);
-
-  const closeSelected = () => {
-    setSelected(null);
-    if (searchParams.get("incident")) setSearchParams({}, { replace: true });
-  };
 
   const filtered = incidents.filter(i =>
     (filterRisk === "ALL" || i.risk_level === filterRisk) &&
@@ -202,7 +188,7 @@ export default function Incidents() {
         </div>
       </div>
 
-      {selected && <IncidentDetail incident={selected} onClose={closeSelected} />}
+      {selected && <IncidentDetail incident={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
