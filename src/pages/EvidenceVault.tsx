@@ -111,11 +111,12 @@ export default function EvidenceVault() {
             </div>
 
             {/* Actions */}
-<div className="flex gap-1.5">
+            <div className="flex gap-1.5">
               <button className="flex-1 py-1 font-mono text-[10px] text-cyan-400 border border-cyan-900 hover:border-cyan-600 transition-colors">VIEW</button>
               <button onClick={() => downloadMetadata(ev)} className="flex-1 py-1 font-mono text-[10px] text-slate-400 border border-slate-700 hover:border-slate-500 transition-colors">METADATA</button>
               <button className="flex-1 py-1 font-mono text-[10px] text-slate-400 border border-slate-700 hover:border-slate-500 transition-colors">INCIDENT</button>
             </div>
+          </div>
         ))}
       </div>
     </div>
