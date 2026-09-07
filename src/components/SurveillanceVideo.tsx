@@ -242,10 +242,8 @@ export default function SurveillanceVideo({
   const isNightVision =
     camera.type === "NIGHT VISION";
 
-  const hasVideoSource = Boolean(
-  camera.video_source &&
-  camera.video_source.trim()
-);
+  const hasVideoSource =
+    Boolean(camera.video_source && camera.video_source.trim());
 
   /*
    * Keep detection state synchronized with incoming data.
